@@ -1,4 +1,4 @@
-package Responses;
+package com.example.manytomany.Responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package Requests;
+package com.example.manytomany.Requests;
 
 import lombok.Data;
 

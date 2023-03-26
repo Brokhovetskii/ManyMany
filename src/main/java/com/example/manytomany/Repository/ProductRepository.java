@@ -1,6 +1,6 @@
-package Repository;
+package com.example.manytomany.Repository;
 
-import DBmodels.Product;
+import com.example.manytomany.DBmodels.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
