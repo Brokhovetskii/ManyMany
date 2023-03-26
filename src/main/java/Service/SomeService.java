@@ -5,6 +5,7 @@ import DBmodels.Shop;
 import Repository.ProductRepository;
 import Repository.ShopRepository;
 import Requests.ProductAssociateRequest;
+import Requests.ShopAssociateRequest;
 import Responses.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,14 @@ public class SomeService {
         productRepository.save(product);
         return new SimpleResponse(true);
     }
-
+    public SimpleResponse associateShopByProduct(ShopAssociateRequest request) {
+        Product product = productRepository.findById(request.getProductId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "продукт не найден"));
+        Shop shop = shopRepository.findById(request.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "магазин не найден"));
+        shop.getProductses().add(product);
+        shopRepository.save(shop);
+        return new SimpleResponse(true);
+    }
 
 }
