@@ -1,5 +1,6 @@
 package com.example.manytomany.Controllers;
 
+import com.example.manytomany.MapDTO.ShopMap;
 import com.example.manytomany.Requests.ShopAssociateRequest;
 import com.example.manytomany.Requests.ShopCreateRequest;
 import com.example.manytomany.Responses.GetShopResponse;
@@ -31,5 +32,9 @@ public class ShopsController {
     @GetMapping("/search")
     public List<GetShopResponse> getShopsByAddress(@RequestParam("address") String address) {
         return service.getShopsByAddress(address);
+    }
+    @GetMapping("/search_map")
+    public List<ShopMap> getMappedProducts(@RequestParam("address") String address) {
+        return service.getMappedProducts(address);
     }
 }

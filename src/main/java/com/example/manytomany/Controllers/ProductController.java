@@ -1,5 +1,7 @@
 package com.example.manytomany.Controllers;
 
+import com.example.manytomany.DTO.ProductDTO;
+import com.example.manytomany.MapDTO.ProductMap;
 import com.example.manytomany.Requests.ProductAssociateRequest;
 import com.example.manytomany.Requests.ProductCreateRequest;
 import com.example.manytomany.Responses.GetProductResponse;
@@ -32,5 +34,9 @@ public class ProductController {
     @GetMapping("/search")
     public List<GetProductResponse> getProductsByTitle(@RequestParam("title") String title) {
         return service.getProductsByTitle(title);
+    }
+    @GetMapping("/search_map")
+    public List<ProductMap> getMappedShops (@RequestParam("title") String title) {
+        return service.getMappedShops(title);
     }
 }
