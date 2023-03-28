@@ -2,14 +2,14 @@ package com.example.manytomany.Controllers;
 
 import com.example.manytomany.Requests.ProductAssociateRequest;
 import com.example.manytomany.Requests.ProductCreateRequest;
+import com.example.manytomany.Responses.GetProductResponse;
 import com.example.manytomany.Responses.IdResponse;
 import com.example.manytomany.Responses.SimpleResponse;
 import com.example.manytomany.Service.SomeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,5 +24,13 @@ public class ProductController {
     @PostMapping("/associate_by")
     public SimpleResponse associateProduct(@RequestBody ProductAssociateRequest productAssociateRequest) {
         return service.associateProductByShop(productAssociateRequest);
+    }
+    @GetMapping("/get_product/{id}")
+    public GetProductResponse getProductById(@PathVariable(name = "id") Long id) {
+        return service.getProductById(id);
+    }
+    @GetMapping("/search")
+    public List<GetProductResponse> getProductsByTitle(@RequestParam("title") String title) {
+        return service.getProductsByTitle(title);
     }
 }

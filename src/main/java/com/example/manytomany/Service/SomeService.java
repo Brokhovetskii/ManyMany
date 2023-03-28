@@ -2,12 +2,12 @@ package com.example.manytomany.Service;
 
 import com.example.manytomany.DBmodels.Product;
 import com.example.manytomany.DBmodels.Shop;
+import com.example.manytomany.DTO.ShopDTO;
 import com.example.manytomany.Repository.ProductRepository;
 import com.example.manytomany.Repository.ShopRepository;
-import com.example.manytomany.Requests.ProductAssociateRequest;
-import com.example.manytomany.Requests.ProductCreateRequest;
-import com.example.manytomany.Requests.ShopAssociateRequest;
-import com.example.manytomany.Requests.ShopCreateRequest;
+import com.example.manytomany.Requests.*;
+import com.example.manytomany.Responses.GetProductResponse;
+import com.example.manytomany.Responses.GetShopResponse;
 import com.example.manytomany.Responses.IdResponse;
 import com.example.manytomany.Responses.SimpleResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -62,5 +66,27 @@ public class SomeService {
                 .build();
         Shop savedShop = shopRepository.save(shop);
         return new IdResponse(savedShop.getId());
+    }
+    public GetProductResponse getProductById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "продукт не найден"));
+        return new GetProductResponse(product);
+    }
+    public List<GetProductResponse> getProductsByTitle(String title) {
+        return productRepository.findByNameContainsIgnoreCase(title)
+                 .stream()
+                 .map(GetProductResponse::new)
+                 .collect(Collectors.toList());
+    }
+    public GetShopResponse getShopById(Long id){
+        Shop shop = shopRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "магазин не найден"));
+        return new GetShopResponse(shop);
+    }
+    public List<GetShopResponse> getShopsByAddress(String address) {
+        return shopRepository.findByAddressContainsIgnoreCase(address)
+                .stream()
+                .map(GetShopResponse::new)
+                .collect(Collectors.toList());
     }
 }
